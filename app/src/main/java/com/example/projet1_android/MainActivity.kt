@@ -5,7 +5,6 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -111,8 +110,8 @@ fun ChoixFaces() {
 
 @Composable
 fun ChoixTri() {
-    var tri by remember { mutableStateOf("Croissant") }
-    val maListe = listOf("Croissant", "Décroissant")
+    var tri by remember { mutableStateOf("aucun") }
+    val maListe = listOf("Croissant", "Décroissant","aucun")
 
     Column {
         Text("Tri : $tri")
@@ -137,8 +136,8 @@ fun ZoneResultats() {
         modifier = Modifier.fillMaxWidth()
     ) {
         Column {
-            Text("Résultats : 3, 5, 2")
-            Text("Somme : 10")
+            Text("Résultats : 2, 5, 2")
+            Text("Somme : 9")
             Log.d("Affichage", "ZoneResultats affichée")
         }
     }
