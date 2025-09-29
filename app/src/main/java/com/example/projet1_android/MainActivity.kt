@@ -9,6 +9,10 @@ import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -33,8 +37,7 @@ class MainActivity : ComponentActivity() {
 fun MonEcranPrincipal(modifier: Modifier = Modifier) {
     Column(
         modifier = modifier
-            .fillMaxSize()
-            .padding(16.dp),
+            .fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
@@ -52,11 +55,11 @@ fun MonEcranPrincipal(modifier: Modifier = Modifier) {
         Spacer(modifier = Modifier.height(20.dp))
 
 
-        ChoixNombreDes()
+        ChoixDes()
 
         Spacer(modifier = Modifier.height(20.dp))
 
-        ChoixNombreFaces()
+        ChoixFaces()
 
         Spacer(modifier = Modifier.height(20.dp))
 
@@ -69,34 +72,38 @@ fun MonEcranPrincipal(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun ChoixNombreDes() {
-    val nbDes = 3f
+fun ChoixDes() {
+    var nbDes by remember { mutableStateOf(3f) }
+
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
-        Text("Nombre de dés : ${nbDes.toInt()}")
+        Text("Dés : $nbDes")
         Slider(
             value = nbDes,
-            onValueChange = { Log.d("Affichage", "Slider déplacé (valeur fixe : ${nbDes.toInt()})") },
-            valueRange = 1f..6f,
-            enabled = false
+            onValueChange = { nbDes = it
+                Log.d("Affichage", "Nombre de dés choisi : $nbDes") },
+            valueRange = 1f..6f
         )
     }
 }
 
 @Composable
-fun ChoixNombreFaces() {
-    val faces = "d6"
-    val options = listOf("d4", "d6", "d8", "d10", "d12", "d20")
+fun ChoixFaces() {
+    var faces by remember { mutableStateOf("6") }
+    val maListe = listOf("4", "6", "8", "10", "12", "20")
 
-    Column {
-        Text("Nombre de faces : $faces")
-        Row(horizontalArrangement = Arrangement.SpaceEvenly) {
-            options.forEach { option ->
-                RadioButton(
-                    selected = (faces == option),
-                    onClick = { Log.d("Affichage", "Option faces cliquée : $option") },
-                    enabled = false
-                )
-                Text(option, modifier = Modifier.align(Alignment.CenterVertically))
+    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+        Text("Faces : $faces")
+        Row {
+            for (i in maListe) {
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    RadioButton(
+                        selected = faces == i,
+                        onClick = { faces = i
+                            Log.d("Affichage", "Nombre de faces choisi : $i")
+                        }
+                    )
+                    Text(i)
+                }
             }
         }
     }
@@ -104,28 +111,20 @@ fun ChoixNombreFaces() {
 
 @Composable
 fun ChoixTri() {
-    val tri = "Aucun"
-    val options = listOf("Aucun", "Croissant", "Décroissant")
+    var tri by remember { mutableStateOf("Croissant") }
+    val maListe = listOf("Croissant", "Décroissant")
 
     Column {
-        Text("Option de tri : $tri")
-        options.forEach { option ->
-            Row(
-                Modifier
-                    .fillMaxWidth()
-                    .selectable(
-                        selected = (tri == option),
-                        onClick = { Log.d("Affichage", "Option tri cliquée : $option ") },
-                        enabled = false
-                    ),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
+        Text("Tri : $tri")
+        for (i in maListe) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
                 RadioButton(
-                    selected = (tri == option),
-                    onClick = null,
-                    enabled = false
+                    selected = tri == i,
+                    onClick = { tri = i
+                        Log.d("Affichage", "Tri choisi : $i")
+                    }
                 )
-                Text(text = option)
+                Text(i)
             }
         }
     }
@@ -134,10 +133,10 @@ fun ChoixTri() {
 @Composable
 fun ZoneResultats() {
     Card(
-        shape = RoundedCornerShape(16.dp),
+        shape = RoundedCornerShape(19.dp),
         modifier = Modifier.fillMaxWidth()
     ) {
-        Column(modifier = Modifier.padding(16.dp)) {
+        Column {
             Text("Résultats : 3, 5, 2")
             Text("Somme : 10")
             Log.d("Affichage", "ZoneResultats affichée")
