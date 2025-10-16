@@ -15,6 +15,7 @@ import androidx.compose.ui.unit.dp
 import com.example.projet1_android.ui.theme.Projet1_androidTheme
 import kotlin.random.Random
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
@@ -24,6 +25,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.ui.graphics.Shadow
+import androidx.compose.ui.text.style.TextAlign
 
 enum class Tri { Aucun, Croissant, Decroissant }
 
@@ -97,12 +100,24 @@ fun DeView(valeur: Int) {
             modifier = Modifier.fillMaxSize(),
             contentScale = ContentScale.Crop
         )
+
+        Box(
+            Modifier
+                .fillMaxSize()
+                .background(Color.Black.copy(alpha = 0.25f))
+        )
+
         Text(
-            valeur.toString(),
+            text = valeur.toString(),
+            textAlign = TextAlign.Center,
             style = TextStyle(
-                fontSize = 28.sp,
-                fontWeight = FontWeight.Bold,
-                color = Color.Black
+                fontSize = 30.sp,
+                fontWeight = FontWeight.ExtraBold,
+                color = Color.White,
+                shadow = Shadow(
+                    color = Color.Black.copy(alpha = 0.8f),
+                    blurRadius = 6f
+                )
             )
         )
     }
