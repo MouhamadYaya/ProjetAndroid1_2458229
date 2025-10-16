@@ -22,6 +22,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.Color
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
+import androidx.compose.foundation.lazy.grid.items
 
 enum class Tri { Aucun, Croissant, Decroissant }
 
@@ -66,10 +69,20 @@ fun LanceurDesScreen(modifier: Modifier = Modifier) {
         Spacer(Modifier.height(24.dp))
         Card(Modifier.fillMaxWidth()) {
             Column(Modifier.padding(16.dp), horizontalAlignment = Alignment.CenterHorizontally) {
-                if (resultats.isEmpty()) Text("Lancez les dés pour voir les résultats")
-                else {
+                if (resultats.isEmpty()) {
+                    Text("Lancez les dés pour voir les résultats")
+                } else {
                     Text("Résultats : ${resultats.joinToString(", ")}")
                     Text("Somme : ${resultats.sum()}")
+                    Spacer(Modifier.height(16.dp))
+                    LazyHorizontalGrid(
+                        rows = GridCells.Fixed(2),
+                        horizontalArrangement = Arrangement.spacedBy(8.dp),
+                        verticalArrangement = Arrangement.spacedBy(8.dp),
+                        modifier = Modifier.height(200.dp).fillMaxWidth()
+                    ) {
+                        items(resultats) { v -> DeView(v) }
+                    }
                 }
             }
         }
