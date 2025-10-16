@@ -14,6 +14,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.projet1_android.ui.theme.Projet1_androidTheme
 import kotlin.random.Random
+import androidx.compose.foundation.Image
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.sp
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.graphics.Color
 
 enum class Tri { Aucun, Croissant, Decroissant }
 
@@ -55,7 +63,6 @@ fun LanceurDesScreen(modifier: Modifier = Modifier) {
         ) { Text("Lancer les dés") }
 
 
-
         Spacer(Modifier.height(24.dp))
         Card(Modifier.fillMaxWidth()) {
             Column(Modifier.padding(16.dp), horizontalAlignment = Alignment.CenterHorizontally) {
@@ -66,6 +73,26 @@ fun LanceurDesScreen(modifier: Modifier = Modifier) {
                 }
             }
         }
+    }
+}
+
+@Composable
+fun DeView(valeur: Int) {
+    Box(Modifier.size(86.dp), contentAlignment = Alignment.Center) {
+        Image(
+            painter = painterResource(id = R.drawable.de_background),
+            contentDescription = "Dé",
+            modifier = Modifier.fillMaxSize(),
+            contentScale = ContentScale.Crop
+        )
+        Text(
+            valeur.toString(),
+            style = TextStyle(
+                fontSize = 28.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color.Black
+            )
+        )
     }
 }
 
